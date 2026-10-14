@@ -1,0 +1,25 @@
+{
+    "name": "hamada-emam-tech/einvoice",
+    "description": "One interface for tax-authority e-invoicing: sign every invoice and submit it. Install the core, then only the authority you need (ZATCA, Egypt ETA...). The signing key is pluggable: software key, USB token or cloud HSM.",
+    "keywords": ["einvoice", "e-invoicing", "zatca", "fatoora", "eta", "egypt", "saudi", "ubl", "cades", "pkcs11"],
+    "license": "MIT",
+    "type": "library",
+    "require": {
+        "php": "^8.2",
+        "ext-json": "*",
+        "ext-openssl": "*"
+    },
+    "suggest": {
+        "hamada-emam-tech/einvoice-zatca": "Saudi ZATCA (Fatoora): UBL 2.1, ECDSA stamp, QR, clearance and reporting",
+        "hamada-emam-tech/einvoice-eta": "Egypt ETA: canonical JSON, CAdES-BES via a USB token or HSM",
+        "hamada-emam-tech/einvoice-keysource-agent": "Sign with a local USB token or HSM through the Signing Agent",
+        "hamada-emam-tech/einvoice-keysource-csc": "Sign remotely through a Cloud Signature Consortium (CSC) API"
+    },
+    "autoload": {
+        "psr-4": { "HamadaEmamTech\\Einvoice\\": "src/" }
+    },
+    "autoload-dev": {
+        "psr-4": { "HamadaEmamTech\\Einvoice\\Tests\\": "tests/" }
+    },
+    "minimum-stability": "stable"
+}

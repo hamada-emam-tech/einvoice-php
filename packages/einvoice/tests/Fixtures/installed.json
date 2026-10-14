@@ -1,0 +1,6 @@
+{
+    "packages": [
+        { "name": "acme/unrelated", "extra": {} },
+        { "name": "hamada-emam-tech/einvoice-zatca", "extra": { "einvoice": { "authorities": { "zatca": "HamadaEmamTech\\Einvoice\\Tests\\Fixtures\\DummyFactory" } } } }
+    ]
+}
