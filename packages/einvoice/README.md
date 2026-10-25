@@ -4,13 +4,13 @@ One PHP interface for tax-authority e-invoicing: sign every invoice and submit i
 
 ```bash
 composer require hamada-emam-tech/einvoice           # the core: model, software keys, a fake authority for tests
-composer require hamada-emam-tech/einvoice-zatca     # Saudi ZATCA (coming soon)
+composer require hamada-emam-tech/einvoice-zatca     # Saudi ZATCA (Fatoora)
 composer require hamada-emam-tech/einvoice-eta       # Egypt ETA (planned)
 ```
 
 Installing an authority package is enough. The core finds it automatically.
 
-> **Status:** v0.1 ships the core, `SoftwareKey`, and the `fake` authority. Authority packages are being built one at a time, ZATCA first. You can already write your own with `extend()` (see [writing an authority or key source](https://github.com/hamada-emam-tech/einvoice-php/blob/main/docs/writing-an-authority.md)).
+> **Status:** the core ships `SoftwareKey` and the `fake` authority. ZATCA is available in [`einvoice-zatca`](https://github.com/hamada-emam-tech/einvoice-zatca), tested live against ZATCA's developer portal. Egypt ETA is next. You can already write your own with `extend()` (see [writing an authority or key source](https://github.com/hamada-emam-tech/einvoice-php/blob/main/docs/writing-an-authority.md)).
 
 ## Two separate choices: the authority and the key
 
@@ -27,7 +27,7 @@ The **key source** decides where the private key lives. The authority never know
 
 ```php
 use HamadaEmamTech\Einvoice\Einvoice;
-use HamadaEmamTech\Einvoice\Model\{Invoice, Line, Money, Party};
+use HamadaEmamTech\Einvoice\Model\{Address, Invoice, Line, Money, Party};
 use HamadaEmamTech\Einvoice\Signing\SoftwareKey;
 
 $einvoice = new Einvoice([
@@ -35,6 +35,8 @@ $einvoice = new Einvoice([
     'authorities' => [
         'zatca' => [
             'environment' => 'sandbox',
+            'certificate' => getenv('ZATCA_CSID_TOKEN'),   // from onboarding, see einvoice-zatca
+            'secret'      => getenv('ZATCA_CSID_SECRET'),
             // A KeySource, or a callable returning one, so the key is only read when signing.
             'key' => fn () => SoftwareKey::fromFile('/secrets/egs.key', getenv('EGS_KEY_PASS'), '/secrets/csid.pem'),
         ],
@@ -44,10 +46,14 @@ $einvoice = new Einvoice([
 $invoice = new Invoice(
     number:   'INV-1001',
     issuedAt: new DateTimeImmutable(),
-    seller:   new Party('Seller Co', '300000000000003', identifiers: ['CRN' => '1010010000']),
-    buyer:    new Party('Buyer Co', '311111111111113'),
+    seller:   new Party('Seller Co', '300000000000003',
+                  new Address('SA', 'Riyadh', 'King Fahd Road', '1234', 'Al Olaya', '12345'),
+                  identifiers: ['CRN' => '1010010000']),
+    buyer:    new Party('Buyer Co', '311111111111113',
+                  new Address('SA', 'Riyadh', 'Olaya Street', '2222', 'Al Olaya', '12222')),
     lines:    [Line::taxed('Widget', '3', Money::of('10.00', 'SAR'), 'S', '15')],
     currency: 'SAR',
+    extra:    ['zatca' => ['icv' => 1001, 'previous_hash' => $lastHash]],  // authority-specific fields
 );
 
 $signed = $einvoice->sign($invoice);    // prepare + sign. Store $signed before you submit.
@@ -111,7 +117,7 @@ $fake->assertSubmitted(fn ($doc) => $doc->invoiceNumber === 'INV-1001');
 
 | Package | Authority | Key | Status |
 |---|---|---|---|
-| `hamada-emam-tech/einvoice-zatca` | ZATCA, Saudi Arabia (Fatoora) | software key, secp256k1 | next |
-| `hamada-emam-tech/einvoice-eta` | ETA, Egypt | USB token or HSM, CAdES-BES | planned |
+| `hamada-emam-tech/einvoice-zatca` | ZATCA, Saudi Arabia (Fatoora) | software key, secp256k1 | available |
+| `hamada-emam-tech/einvoice-eta` | ETA, Egypt | USB token or HSM, CAdES-BES | next |
 
 Framework-agnostic: PHP 8.2+ with ext-openssl, no framework dependency.

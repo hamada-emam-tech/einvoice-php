@@ -1,0 +1,35 @@
+{
+    "name": "hamada-emam-tech/einvoice-zatca",
+    "description": "ZATCA (Fatoora) for hamada-emam-tech/einvoice: Saudi e-invoicing with UBL 2.1, the ECDSA stamp, the QR code, onboarding (CSR, compliance and production CSIDs), clearance and reporting.",
+    "keywords": ["einvoice", "e-invoicing", "zatca", "fatoora", "saudi", "ksa", "ubl", "xades", "qr", "phase 2"],
+    "license": "MIT",
+    "type": "library",
+    "require": {
+        "php": "^8.2",
+        "ext-dom": "*",
+        "ext-json": "*",
+        "ext-openssl": "*",
+        "ext-xmlwriter": "*",
+        "hamada-emam-tech/einvoice": "^0.1",
+        "psr/http-client": "^1.0",
+        "psr/http-factory": "^1.0"
+    },
+    "require-dev": {
+        "guzzlehttp/guzzle": "^7.8",
+        "phpunit/phpunit": "^11.0"
+    },
+    "suggest": {
+        "guzzlehttp/guzzle": "A PSR-18 HTTP client, picked up automatically",
+        "symfony/http-client": "A PSR-18 HTTP client, picked up automatically"
+    },
+    "autoload": {
+        "psr-4": { "HamadaEmamTech\\Einvoice\\Zatca\\": "src/" }
+    },
+    "autoload-dev": {
+        "psr-4": { "HamadaEmamTech\\Einvoice\\Zatca\\Tests\\": "tests/" }
+    },
+    "extra": {
+        "einvoice": { "authorities": { "zatca": "HamadaEmamTech\\Einvoice\\Zatca\\ZatcaFactory" } }
+    },
+    "minimum-stability": "stable"
+}

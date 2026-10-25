@@ -18,7 +18,7 @@ jobs:
       matrix:
         package:
           - { folder: einvoice, repo: einvoice }
-          # - { folder: einvoice-zatca, repo: einvoice-zatca }   # enable when the ZATCA driver lands
+          - { folder: einvoice-zatca, repo: einvoice-zatca }
     steps:
       - uses: actions/checkout@v4
         with:
