@@ -1,0 +1,33 @@
+{
+    "name": "hamada-emam-tech/einvoice-eta",
+    "description": "Egypt ETA eInvoicing for hamada-emam-tech/einvoice: the v1.0 JSON document, ETA's canonical serialization, the CAdES-BES signature (works with USB tokens through any KeySource), batch submission, status, cancel and reject.",
+    "keywords": ["einvoice", "e-invoicing", "eta", "egypt", "egyptian tax authority", "cades", "cades-bes", "usb token"],
+    "license": "MIT",
+    "type": "library",
+    "require": {
+        "php": "^8.2",
+        "ext-json": "*",
+        "ext-openssl": "*",
+        "hamada-emam-tech/einvoice": "^0.1",
+        "psr/http-client": "^1.0",
+        "psr/http-factory": "^1.0"
+    },
+    "require-dev": {
+        "guzzlehttp/guzzle": "^7.8",
+        "phpunit/phpunit": "^11.0"
+    },
+    "suggest": {
+        "guzzlehttp/guzzle": "A PSR-18 HTTP client, picked up automatically",
+        "symfony/http-client": "A PSR-18 HTTP client, picked up automatically"
+    },
+    "autoload": {
+        "psr-4": { "HamadaEmamTech\\Einvoice\\Eta\\": "src/" }
+    },
+    "autoload-dev": {
+        "psr-4": { "HamadaEmamTech\\Einvoice\\Eta\\Tests\\": "tests/" }
+    },
+    "extra": {
+        "einvoice": { "authorities": { "eta": "HamadaEmamTech\\Einvoice\\Eta\\EtaFactory" } }
+    },
+    "minimum-stability": "stable"
+}
