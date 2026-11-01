@@ -19,6 +19,8 @@ jobs:
         package:
           - { folder: einvoice, repo: einvoice }
           - { folder: einvoice-zatca, repo: einvoice-zatca }
+          - { folder: einvoice-eta, repo: einvoice-eta }
+          - { folder: einvoice-keysource-agent, repo: einvoice-keysource-agent }
     steps:
       - uses: actions/checkout@v4
         with:

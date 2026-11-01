@@ -8,12 +8,13 @@ One PHP interface for tax-authority e-invoicing: sign every invoice and submit i
 ```bash
 composer require hamada-emam-tech/einvoice           # the core: model, software keys, a fake authority for tests
 composer require hamada-emam-tech/einvoice-zatca     # Saudi ZATCA (Fatoora)
-composer require hamada-emam-tech/einvoice-eta       # Egypt ETA (planned)
+composer require hamada-emam-tech/einvoice-eta       # Egypt ETA
+composer require hamada-emam-tech/einvoice-keysource-agent  # USB token or HSM, via signing-agent
 ```
 
 Installing an authority package is enough. The core finds it automatically.
 
-> **Status:** the core ships `SoftwareKey` and the `fake` authority. ZATCA is available in [`einvoice-zatca`](https://github.com/hamada-emam-tech/einvoice-zatca), tested live against ZATCA's developer portal. Egypt ETA is next. You can already write your own with `extend()` (see [writing an authority or key source](https://github.com/hamada-emam-tech/einvoice-php/blob/main/docs/writing-an-authority.md)).
+> **Status:** the core ships `SoftwareKey` and the `fake` authority. ZATCA is available in [`einvoice-zatca`](https://github.com/hamada-emam-tech/einvoice-zatca), tested live against ZATCA's developer portal. Egypt ETA is in [`einvoice-eta`](packages/einvoice-eta), checked against ETA's SDK samples and with OpenSSL; its pre-production test is still to run. You can already write your own with `extend()` (see [writing an authority or key source](https://github.com/hamada-emam-tech/einvoice-php/blob/main/docs/writing-an-authority.md)).
 
 ## Two separate choices: the authority and the key
 
@@ -23,7 +24,7 @@ The **key source** decides where the private key lives. The authority never know
 | Key source | Where the key lives | Package |
 |---|---|---|
 | `SoftwareKey` | A PEM file or secret your app holds (ZATCA) | in the core |
-| Signing Agent | A USB token or HSM, through PKCS#11 (Egypt ETA) | `einvoice-keysource-agent` (planned) |
+| Signing Agent | A USB token or HSM, through PKCS#11 and the local [signing-agent](https://github.com/hamada-emam-tech/signing-agent) (Egypt ETA) | [`einvoice-keysource-agent`](packages/einvoice-keysource-agent) |
 | CSC | A cloud signing service (CSC API) | `einvoice-keysource-csc` (planned) |
 
 ## Use it
@@ -121,6 +122,6 @@ $fake->assertSubmitted(fn ($doc) => $doc->invoiceNumber === 'INV-1001');
 | Package | Authority | Key | Status |
 |---|---|---|---|
 | `hamada-emam-tech/einvoice-zatca` | ZATCA, Saudi Arabia (Fatoora) | software key, secp256k1 | available |
-| `hamada-emam-tech/einvoice-eta` | ETA, Egypt | USB token or HSM, CAdES-BES | next |
+| `hamada-emam-tech/einvoice-eta` | ETA, Egypt | RSA certificate (USB token, HSM or PEM), CAdES-BES | built; pre-production test pending |
 
 Framework-agnostic: PHP 8.2+ with ext-openssl, no framework dependency.

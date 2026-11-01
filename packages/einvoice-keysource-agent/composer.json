@@ -1,0 +1,29 @@
+{
+    "name": "hamada-emam-tech/einvoice-keysource-agent",
+    "description": "A KeySource for hamada-emam-tech/einvoice that signs with a USB token or HSM through the local Signing Agent (PKCS#11). Use it with einvoice-eta for Egypt's ETA.",
+    "keywords": ["einvoice", "e-invoicing", "pkcs11", "usb token", "hsm", "eta", "signing agent"],
+    "license": "MIT",
+    "type": "library",
+    "require": {
+        "php": "^8.2",
+        "ext-json": "*",
+        "hamada-emam-tech/einvoice": "^0.1",
+        "psr/http-client": "^1.0",
+        "psr/http-factory": "^1.0"
+    },
+    "require-dev": {
+        "guzzlehttp/guzzle": "^7.8",
+        "phpunit/phpunit": "^11.0"
+    },
+    "suggest": {
+        "guzzlehttp/guzzle": "A PSR-18 HTTP client, picked up automatically",
+        "symfony/http-client": "A PSR-18 HTTP client, picked up automatically"
+    },
+    "autoload": {
+        "psr-4": { "HamadaEmamTech\\Einvoice\\KeySource\\Agent\\": "src/" }
+    },
+    "autoload-dev": {
+        "psr-4": { "HamadaEmamTech\\Einvoice\\KeySource\\Agent\\Tests\\": "tests/" }
+    },
+    "minimum-stability": "stable"
+}

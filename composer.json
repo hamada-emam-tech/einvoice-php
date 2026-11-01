@@ -20,18 +20,23 @@
     "autoload": {
         "psr-4": {
             "HamadaEmamTech\\Einvoice\\": "packages/einvoice/src/",
-            "HamadaEmamTech\\Einvoice\\Zatca\\": "packages/einvoice-zatca/src/"
+            "HamadaEmamTech\\Einvoice\\Zatca\\": "packages/einvoice-zatca/src/",
+            "HamadaEmamTech\\Einvoice\\Eta\\": "packages/einvoice-eta/src/",
+            "HamadaEmamTech\\Einvoice\\KeySource\\Agent\\": "packages/einvoice-keysource-agent/src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
             "HamadaEmamTech\\Einvoice\\Tests\\": "packages/einvoice/tests/",
-            "HamadaEmamTech\\Einvoice\\Zatca\\Tests\\": "packages/einvoice-zatca/tests/"
+            "HamadaEmamTech\\Einvoice\\Zatca\\Tests\\": "packages/einvoice-zatca/tests/",
+            "HamadaEmamTech\\Einvoice\\Eta\\Tests\\": "packages/einvoice-eta/tests/",
+            "HamadaEmamTech\\Einvoice\\KeySource\\Agent\\Tests\\": "packages/einvoice-keysource-agent/tests/",
+            "HamadaEmamTech\\Einvoice\\Tests\\Simulation\\": "tests/Simulation/"
         }
     },
     "scripts": {
         "test": "phpunit",
-        "analyse": "phpstan analyse --level=8 packages"
+        "analyse": "phpstan analyse --level=8 packages tests"
     },
     "config": {
         "sort-packages": true

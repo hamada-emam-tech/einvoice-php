@@ -6,6 +6,9 @@
         <testsuite name="packages">
             <directory>packages/*/tests</directory>
         </testsuite>
+        <testsuite name="simulation">
+            <directory>tests/Simulation</directory>
+        </testsuite>
     </testsuites>
     <source>
         <include><directory>packages/*/src</directory></include>
